@@ -55,4 +55,4 @@ def get_info_by_mail_from():
 
 
 if __name__ == "__main__": 
-    app.run(port=Config.PORT, host=Config.HOST, debug=True)
+    app.run(port=Config.PORT, host=Config.HOST)
