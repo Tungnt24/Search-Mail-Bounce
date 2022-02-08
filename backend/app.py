@@ -38,7 +38,7 @@ def get_result(records):
 def get_info_by_mail_from():
     limit = 20
     data = request.get_json()
-    email = data.get('email', '')
+    email = data.get('email', '').strip()
     collection = _get_collection()
     filter = {
         'Status': 'bounced', 
