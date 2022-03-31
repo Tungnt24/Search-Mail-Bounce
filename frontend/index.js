@@ -10,7 +10,8 @@ function searchMail() {
         },
         body: raw
     };
-    fetch("http://127.0.0.1:8080/mail-bounce", requestOptions)
+    const backend_url = "http://localhost:8080/mail-bounce";
+    fetch(backend_url, requestOptions)
     .then(response => response.json())
     .then(result => {
         var records = result.records;
