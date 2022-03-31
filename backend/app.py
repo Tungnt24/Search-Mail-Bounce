@@ -35,24 +35,22 @@ def get_result(records):
 @app.route("/mail-bounce", methods=['POST'])
 @cross_origin()
 def get_info_by_mail_from():
-    if request.authorization and request.authorization.username == Config.USERNAME and request.authorization.password == Config.PASSWORD:
-        limit = 20
-        data = request.get_json()
-        email = data.get('email', '')
-        collection = _get_collection()
-        filter = {
-            'Status': 'bounced', 
-            'From': f'{email}'
-        }
-        sort = list({'SentAt': -1}.items())
-        records = collection.find(
-            filter = filter,
-            sort = sort,
-            limit = limit
-        )
-        result = get_result(records)
-        return jsonify(result), 200
-    return make_response('Could not verify your access level for that URL.\n',401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+    limit = 30
+    data = request.get_json()
+    email = data.get('email', '')
+    collection = _get_collection()
+    filter = {
+        'Status': 'bounced', 
+        'From': f'{email}'
+    }
+    sort = list({'SentAt': -1}.items())
+    records = collection.find(
+        filter = filter,
+        sort = sort,
+        limit = limit
+    )
+    result = get_result(records)
+    return jsonify(result), 200
     
 
 
