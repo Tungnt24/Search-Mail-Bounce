@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, make_response, redirect, request, jsonify
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 
@@ -32,26 +32,28 @@ def get_result(records):
         })
     return results
 
-
 @app.route("/mail-bounce", methods=['POST'])
 @cross_origin()
 def get_info_by_mail_from():
-    limit = 20
-    data = request.get_json()
-    email = data.get('email', '')
-    collection = _get_collection()
-    filter = {
-        'Status': 'bounced', 
-        'From': f'{email}'
-    }
-    sort = list({'SentAt': -1}.items())
-    records = collection.find(
-        filter = filter,
-        sort = sort,
-        limit = limit
-    )
-    result = get_result(records)
-    return jsonify(result), 200
+    if request.authorization and request.authorization.username == Config.USERNAME and request.authorization.password == Config.PASSWORD:
+        limit = 20
+        data = request.get_json()
+        email = data.get('email', '')
+        collection = _get_collection()
+        filter = {
+            'Status': 'bounced', 
+            'From': f'{email}'
+        }
+        sort = list({'SentAt': -1}.items())
+        records = collection.find(
+            filter = filter,
+            sort = sort,
+            limit = limit
+        )
+        result = get_result(records)
+        return jsonify(result), 200
+    return make_response('Could not verify your access level for that URL.\n',401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+    
 
 
 if __name__ == "__main__": 
