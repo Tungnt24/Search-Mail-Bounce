@@ -46,7 +46,7 @@ def get_info_by_mail_from():
     collection = _get_collection()
     filter = {
         'Status': 'bounced', 
-        'From': f'{email}'
+        'From': f'{email.strip()}'
     }
     sort = list({'SentAt': -1}.items())
     records = collection.find(
