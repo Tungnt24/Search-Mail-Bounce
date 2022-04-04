@@ -43,6 +43,8 @@ def index():
 def get_info_by_mail_from():
     limit = 30
     email = request.form.get("email")
+    if not email:
+        return {"error": "Email is required"}
     collection = _get_collection()
     filter = {
         'Status': 'bounced', 
