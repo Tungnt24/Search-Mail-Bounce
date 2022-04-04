@@ -33,32 +33,31 @@ def get_result(records):
     return results
 
 
-@app.route('/', methods=["GET"])
-def index():
-    return render_template('result.html')
-
-
-@app.route("/search", methods=['POST'])
+@app.route('/')
+@app.route("/search", methods=['GET','POST'])
 @cross_origin()
 def get_info_by_mail_from():
-    limit = 30
-    email = request.form.get("email")
-    if not email:
-        return {"error": "Email is required"}
-    email = f"<{email.strip()}>"
-    collection = _get_collection()
-    filter = {
-        'Status': 'bounced', 
-        'From': f'{email}'
-    }
-    sort = list({'SentAt': -1}.items())
-    records = collection.find(
-        filter = filter,
-        sort = sort,
-        limit = limit
-    )
-    result = get_result(records)
-    return render_template('result.html', results=result["records"])
+    if request.method == 'GET':
+        return render_template('result.html')
+    elif request.method == 'POST':        
+        limit = 30
+        email = request.form.get("email")
+        if not email:
+            return {"error": "Email is required"}
+        email = f"<{email.strip()}>"
+        collection = _get_collection()
+        filter = {
+            'Status': 'bounced', 
+            'From': f'{email}'
+        }
+        sort = list({'SentAt': -1}.items())
+        records = collection.find(
+            filter = filter,
+            sort = sort,
+            limit = limit
+        )
+        result = get_result(records)
+        return render_template('result.html', results=result["records"])
 
 
 if __name__ == "__main__": 
