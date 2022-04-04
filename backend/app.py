@@ -45,10 +45,11 @@ def get_info_by_mail_from():
     email = request.form.get("email")
     if not email:
         return {"error": "Email is required"}
+    email = f"<{email.strip()}>"
     collection = _get_collection()
     filter = {
         'Status': 'bounced', 
-        'From': f'{email.strip()}'
+        'From': f'{email}'
     }
     sort = list({'SentAt': -1}.items())
     records = collection.find(
