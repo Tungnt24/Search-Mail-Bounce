@@ -1,4 +1,4 @@
-from flask import Flask, make_response, redirect, request, jsonify
+from flask import Flask, request, render_template
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 
@@ -32,12 +32,17 @@ def get_result(records):
         })
     return results
 
-@app.route("/mail-bounce", methods=['POST'])
+
+@app.route('/', methods=["GET"])
+def index():
+    return render_template('result.html')
+
+
+@app.route("/search", methods=['POST'])
 @cross_origin()
 def get_info_by_mail_from():
     limit = 30
-    data = request.get_json()
-    email = data.get('email', '')
+    email = request.form.get("email")
     collection = _get_collection()
     filter = {
         'Status': 'bounced', 
@@ -50,8 +55,7 @@ def get_info_by_mail_from():
         limit = limit
     )
     result = get_result(records)
-    return jsonify(result), 200
-    
+    return render_template('result.html', results=result["records"])
 
 
 if __name__ == "__main__": 
