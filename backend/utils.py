@@ -1,12 +1,5 @@
-from flask import Flask, make_response, redirect, request, jsonify
-from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
-
-from settings import Config
-
-app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
+from backend.settings import Config
 
 
 def _get_collection():
@@ -31,28 +24,3 @@ def get_result(records):
             "Sent_At": record.get("SentAt")
         })
     return results
-
-@app.route("/mail-bounce", methods=['POST'])
-@cross_origin()
-def get_info_by_mail_from():
-    limit = 30
-    data = request.get_json()
-    email = data.get('email', '')
-    collection = _get_collection()
-    filter = {
-        'Status': 'bounced', 
-        'From': f'{email}'
-    }
-    sort = list({'SentAt': -1}.items())
-    records = collection.find(
-        filter = filter,
-        sort = sort,
-        limit = limit
-    )
-    result = get_result(records)
-    return jsonify(result), 200
-    
-
-
-if __name__ == "__main__": 
-    app.run(port=Config.PORT, host=Config.HOST)

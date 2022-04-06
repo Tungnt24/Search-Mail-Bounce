@@ -6,11 +6,3 @@ services:
       - ./backend:/usr/src/mail-bounce
     ports:
       - 8080:8080
-  frontend:
-    image: nginx:alpine
-    volumes:
-      - ./frontend:/usr/share/nginx/html
-    ports:
-      - 8081:80
-    depends_on:
-      - backend
