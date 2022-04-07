@@ -1,57 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Search Results</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='search.css')}}">
-</head>
-<body>
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-<div class="container bootstrap snippets bootdey">
-    <hr>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form action="/search" method="POST">
-            <div class="well search-result">
-                <div class="input-group">
-                    <input type="text" name="email" class="form-control" placeholder="email">
-                    <span class="input-group-btn">
-              <input class="btn btn-info btn-lg" type="submit">
-                        <i class="glyphicon glyphicon-search"></i>
-                        Search
-                    </input>
+{% extends 'home.html' %}
+{% block search %}
+<form action="/search" method="POST">
+    <div class="well search-result">
+        <div class="input-group">
+            <input type="text" name="email_from" class="form-control" placeholder="email from" required>
+            <input type="text" name="email_to" class="form-control" placeholder="email to">
+            <input type="checkbox" id="vehicle1" name="spam" value="1">
+            <label for="vehicle1">  Spam</label><br>
+            <span class="input-group-btn">
+                <input class="btn btn-info btn-lg" type="submit">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+                </input>
             </span>
-                </div>
-            </div>
-            </form>
-            {% for i in results %}
-            <div class="well search-result">
-                <div class="row">
-                    <a >
-                        <div class="col-xs-6 col-sm-9 col-md-9 col-lg-10 title">
-                            <p><b>From: </b>{{i['From']}}</p>
-                            <p><b>To: </b>{{i['To']}}</p>
-                            <p><b>Message ID: </b>{{i['Message_Id']}}</p>
-                            <p><b>Recipient Smtp Ip: </b>{{i['Recipient_Smtp_Ip']}}</p>
-                            <p><b>Recipient Smtp Domain: </b>{{i['Recipient_Smtp_Domain']}}</p>
-                            <p><b>Message: </b>{{i['Message']}}</p>
-                            <p><b>Status: </b>{{i['Status']}}</p>
-                            <p><b>Sent At: </b>{{i['Sent_At']}}</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
         </div>
     </div>
-</div>
-
-<script type="text/javascript">
-  
-</script>
-</body>
-</html>
+</form>
+{% endblock %}
