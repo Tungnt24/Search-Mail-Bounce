@@ -1,0 +1,31 @@
+{% extends 'search.html' %}
+{% block results %}
+{% for result in results %}
+<div class="hr-line-dashed"></div>
+<div class="search-result">
+    <p><b>From: </b>{{result['From']}}</p>
+    <p><b>To: </b>{{result['To']}}</p>
+    <p><b>Message ID: </b>{{result['Message_Id']}}</p>
+    <p><b>Recipient Smtp Ip: </b>{{result['Recipient_Smtp_Ip']}}</p>
+    <p><b>Recipient Smtp Domain: </b>{{result['Recipient_Smtp_Domain']}}</p>
+    <p><b>Message: </b>{{result['Message']}}</p>
+    <p><b>Status: </b>{{result['Status']}}</p>
+    <p><b>Sent At: </b>{{result['Sent_At']}}</p>
+    </p>
+</div>
+{% endfor %}
+<div class="hr-line-dashed"></div>
+<div class="text-center">
+    <div class="btn-group">
+        <button class="btn btn-white" type="button"><i class="glyphicon glyphicon-chevron-left"></i></button>
+        <button class="btn btn-white active">1</button>
+        <button class="btn btn-white">2</button>
+        <button class="btn btn-white">3</button>
+        <button class="btn btn-white">4</button>
+        <button class="btn btn-white">5</button>
+        <button class="btn btn-white">6</button>
+        <button class="btn btn-white">7</button>
+        <button class="btn btn-white" type="button"><i class="glyphicon glyphicon-chevron-right"></i> </button>
+    </div>
+</div>
+{% endblock %}

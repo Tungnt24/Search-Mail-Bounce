@@ -10,5 +10,4 @@ class Config:
     MONGODB_URI = env.str("MONGODB_URI", default="")
     MONGODB_DB = env.str("MONGODB_DB", default="db")
     MONGODB_COLLECTION = env.str("MONGODB_COLLECTION", default="collection")
-    USERNAME = env.str("USERNAME", default="")
-    PASSWORD = env.str("PASSWORD", default="")
+    SPAM_PATTERN = env.str("SPAM_PATTERN", default="")
