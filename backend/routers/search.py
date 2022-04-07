@@ -15,7 +15,7 @@ def index():
 
 @search_bp.route('/search', methods=['POST'])
 def get_info_by_mail_from():   
-    limit = 10
+    limit = 5
     data = request.form
     email_from = f"<{data.get('email_from')}>"
     filter = {
